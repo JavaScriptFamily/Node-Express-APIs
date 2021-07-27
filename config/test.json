@@ -1,0 +1,19 @@
+{  
+  "hostName": "Products",
+  "environment": "test",
+  "WEB_URL": "http://localhost:4000",
+  "BASE_URL": "http://localhost:4000/api",
+  "ASSETSPATH": "http://localhost:4000/assets",
+  "IMAGEPATH": "http://localhost:4000/api/assets",
+  "FRONTEND_URL": "http://localhost:4200",
+  "jwtPrivateKey": "1234",
+  "db": "mongodb://localhost/products_test",
+  "userDefaultImage": "/defaultImages/user.png",
+  "bookDefaultImage": "/defaultImages/book-default.png",
+  "noImage": "/defaultImages/noimage.png",
+  "images": "/defaultImages/",
+  "email": {
+    "email": "official.gurudutt.sharma@gmail.com",
+    "pass": ""
+    }
+}
