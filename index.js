@@ -1,10 +1,10 @@
 const express = require('express');
 const winston = require('winston'); // Winston is a simple and universal logging library 
-const cors = require('cors')
+const cors    = require('cors')
+const config  = require('config');
 const bodyParser = require('body-parser');
-const publicDir = require('path').join(__dirname,'/assets');
 const fileUpload = require('express-fileupload');
-const config    = require('config');
+const publicDir  = require('path').join(__dirname,'/assets');
 
 const app = express();
 app.use(cors());
