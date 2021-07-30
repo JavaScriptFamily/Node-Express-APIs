@@ -213,10 +213,147 @@ const generateAuthToken = function() {
 }
 ```
 
+```javascript
+const jwt = require('jsonwebtoken');
+
+const token = req.header('x-auth-token');
+if (!token) return res.status(401).send(errorResonse('Access denied. No token provided.'));
+
+try {
+    const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+    req.user = decoded; 
+    next();
+}
+catch (ex) {
+    res.status(400).send(errorResonse('Invalid token'));
+}
+```
+
 ### Q.10: What is bcryptjs?
+
+We will learn to use NPM bcryptjs library to hash and compare the passwords in Node. ... In this method, you do not store users' passwords in the database in its original form. Instead, a password is stored in a complex combination of text and unique characters; this is known as a password hash method.
+
+Generate Password
+```javascript
+const bcrypt = require('bcryptjs');
+
+const salt = await bcrypt.genSalt(10);
+const password = await bcrypt.hash(req.body.password, salt);
+```
+
+Compare Password
+```javascript
+const validPassword = await bcrypt.compare(req.body.password.toString(), user.password);
+if (!validPassword) return res.status(400).send(errorRes('Invalid email or password.'));
+```
+
 ### Q.11: What is crypto?
+Using for generating random string.
+
 ### Q.12: What is lodash?
+A modern JavaScript utility library delivering modularity, performance & extras.
+
+Lodash makes JavaScript easier by taking the hassle out of working with arrays, numbers, objects, strings, etc.
+Lodash’s modular methods are great for:
+
+* Iterating arrays, objects, & strings
+* Manipulating & testing values
+* Creating composite functions
+
+```javascript
+var object = { 'a': 1, 'b': '2', 'c': 3 };
+ 
+_.pick(object, ['a', 'c']);
+// => { 'a': 1, 'c': 3 }
+```
+
 ### Q.13: What is nodemailer?
+Nodemailer is a module for Node.js applications to allow easy as cake email sending. The project got started back in 2010 when there was no sane option to send email messages, today it is the solution most Node.js users turn to by default.
+
+```javascript
+"use strict";
+const nodemailer = require("nodemailer");
+
+// async..await is not allowed in global scope, must use a wrapper
+async function main() {
+  // Generate test SMTP service account from ethereal.email
+  // Only needed if you don't have a real mail account for testing
+  let testAccount = await nodemailer.createTestAccount();
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: testAccount.user, // generated ethereal user
+      pass: testAccount.pass, // generated ethereal password
+    },
+  });
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    to: "bar@example.com, baz@example.com", // list of receivers
+    subject: "Hello ✔", // Subject line
+    text: "Hello world?", // plain text body
+    html: "<b>Hello world?</b>", // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+}
+
+main().catch(console.error);
+```
+
 ### Q.14: What is node-cron?
+The node-cron module is tiny task scheduler in pure JavaScript for node.js based on GNU crontab. This module allows you to schedule task in node.js using full crontab syntax.
+
+```javascript
+var cron = require('node-cron');
+
+cron.schedule('* * * * *', () => {
+  console.log('running a task every minute');
+});
+```
+
 ### Q.15: What is ejs?
+EJS is a simple templating language which is used to generate HTML markup with plain JavaScript. It also helps to embed JavaScript to HTML pages.
+
+
 ### Q.16: What is shelljs?
+ShellJS is a portable (Windows/Linux/macOS) implementation of Unix shell commands on top of the Node.js API. You can use it to eliminate your shell script's dependency on Unix while still keeping its familiar and powerful commands. You can also install it globally so you can run it from outside Node projects - say goodbye to those gnarly Bash scripts!
+
+```javascript
+var shell = require('shelljs');
+ 
+if (!shell.which('git')) {
+  shell.echo('Sorry, this script requires git');
+  shell.exit(1);
+}
+ 
+// Copy files to release dir
+shell.rm('-rf', 'out/Release');
+shell.cp('-R', 'stuff/', 'out/Release');
+ 
+// Replace macros in each .js file
+shell.cd('lib');
+shell.ls('*.js').forEach(function (file) {
+  shell.sed('-i', 'BUILD_VERSION', 'v0.1.2', file);
+  shell.sed('-i', /^.*REMOVE_THIS_LINE.*$/, '', file);
+  shell.sed('-i', /.*REPLACE_LINE_WITH_MACRO.*\n/, shell.cat('macro.js'), file);
+});
+shell.cd('..');
+ 
+// Run external tool synchronously
+if (shell.exec('git commit -am "Auto-commit"').code !== 0) {
+  shell.echo('Error: Git commit failed');
+  shell.exit(1);
+}
+```
+
