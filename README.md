@@ -14,6 +14,58 @@ Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allo
 
 CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
 
+Simple Usage
+```javascript
+var express = require('express')
+var cors = require('cors')
+var app = express()
+ 
+app.use(cors())
+ 
+app.get('/products/:id', function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for all origins!'})
+})
+ 
+app.listen(80, function () {
+  console.log('CORS-enabled web server listening on port 80')
+})
+```
+
+Enable CORS for a Single Route
+```javascript
+var express = require('express')
+var cors = require('cors')
+var app = express()
+ 
+app.get('/products/:id', cors(), function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for a Single Route'})
+})
+ 
+app.listen(80, function () {
+  console.log('CORS-enabled web server listening on port 80')
+});
+```
+
+Configuring CORS w/ Dynamic Origin
+```javascript
+var express = require('express')
+var cors = require('cors')
+var app = express()
+ 
+var corsOptions = {
+  origin: 'http://example.com',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+ 
+app.get('/products/:id', cors(corsOptions), function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for only example.com.'})
+})
+ 
+app.listen(80, function () {
+  console.log('CORS-enabled web server listening on port 80')
+})
+```
+
 ### Q.4: What is config? How to manage different different environment?
 Node-config organizes hierarchical configurations for your app deployments.
 
