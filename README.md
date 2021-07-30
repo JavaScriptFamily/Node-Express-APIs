@@ -83,7 +83,38 @@ $ node my-app.js
 ```
 
 ### Q.5: What is body parser?
+Node.js body parsing middleware.
+
+Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
+
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+```
+
 ### Q.6: What is express-fileupload?
+Simple express middleware for uploading files.
+
+Usage
+
+When you upload a file, the file will be accessible from req.files.
+Example:
+
+* You're uploading a file called car.jpg
+* Your input's name field is foo: <input name="foo" type="file" />
+* In your express server request, you can access your uploaded file from req.files.foo:
+
+```javascript
+app.post('/upload', function(req, res) {
+  console.log(req.files.foo); // the uploaded file object
+});
+```
+
 ### Q.7: What is mongoose? What is option of mongoose.connect() ?
 ### Q.8: What is JOI?
 ### Q.9: What is jsonwebtoken? What jsonwebtoken generate a token and how it verify?
