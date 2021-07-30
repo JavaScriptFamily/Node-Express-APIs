@@ -9,8 +9,27 @@ An error log is a personalized document that lists your mistakes and how to corr
 
 winston is designed to be a simple and universal logging library with support for multiple transports. A transport is essentially a storage device for your logs. Each winston logger can have multiple transports (see: Transports) configured at different levels (see: Logging levels). For example, one may want error logs to be stored in a persistent remote location (like a database), but all logs output to the console or a local file.
 
-### Q.3: What is cors?
-### Q.4: What is config? How to manage different different environment
+### Q.3: What is cors? What is cors in express?
+Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any other origins (domain, scheme, or port) than its own from which a browser should permit loading of resources. CORS also relies on a mechanism by which browsers make a “preflight” request to the server hosting the cross-origin resource, in order to check that the server will permit the actual request. In that preflight, the browser sends headers that indicate the HTTP method and headers that will be used in the actual request.
+
+CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
+
+### Q.4: What is config? How to manage different different environment?
+Node-config organizes hierarchical configurations for your app deployments.
+
+It lets you define a set of default parameters, and extend them for different deployment environments (development, qa, staging, production, etc.).
+
+Configurations are stored in configuration files within your application, and can be overridden and extended by environment variables, command line parameters, or external sources.
+
+```javascript
+$ npm install config
+$ mkdir config
+$ vi config/default.json
+
+$ export NODE_ENV=production
+$ node my-app.js
+```
+
 ### Q.5: What is body parser?
 ### Q.6: What is express-fileupload?
 ### Q.7: What is mongoose? What is option of mongoose.connect() ?
