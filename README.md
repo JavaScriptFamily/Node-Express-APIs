@@ -2,9 +2,13 @@
 ### Q.1: What is express? Why you choose express for node js framework?
 Express 3.x is a light-weight web application framework to help organize your web application into an MVC architecture on the server side. You can use a variety of choices for your templating language (like EJS, Jade, and Dust.js).
 
-You can then use a database like MongoDB with Mongoose (for modeling) to provide a backend for your Node.js application. Express.js basically helps you manage everything, from routes, to handling requests and views.
+You can then use a database like MongoDB with Mongoose (for modeling) to provide a backend for your Node.js application. Express.js basically helps you manage everything, from routes, to handling requests and views. 
 
-### Q.2: What is error logging? How do you log error in express?
+### Q.2: What is error logging? What is winston logging?
+An error log is a personalized document that lists your mistakes and how to correct them. When you receive feedback about a mistake in your writing, you create an entry in your error log that includes the error and how to correct it.
+
+winston is designed to be a simple and universal logging library with support for multiple transports. A transport is essentially a storage device for your logs. Each winston logger can have multiple transports (see: Transports) configured at different levels (see: Logging levels). For example, one may want error logs to be stored in a persistent remote location (like a database), but all logs output to the console or a local file.
+
 ### Q.3: What is cors?
 ### Q.4: What is config? How to manage different different environment
 ### Q.5: What is body parser?
