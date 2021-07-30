@@ -115,9 +115,104 @@ app.post('/upload', function(req, res) {
 });
 ```
 
-### Q.7: What is mongoose? What is option of mongoose.connect() ?
+### Q.7: What is mongoose? What is option of mongoose.connect()?
+Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment. Mongoose supports both promises and callbacks.
+
+```javascript
+await mongoose.connect('mongodb://localhost/my_database', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+});
+```
+
+Defining a Model
+```javascript
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
+
+const Comment = new Schema({
+  name: { type: String, default: 'hahaha' },
+  age: { type: Number, min: 18, index: true },
+  bio: { type: String, match: /[a-z]/ },
+  date: { type: Date, default: Date.now },
+  buff: Buffer
+});
+```
+
+Accessing a Model
+```javascript
+const MyModel = mongoose.model('ModelName');
+```
+
 ### Q.8: What is JOI?
+Hapi Joi is an object schema description language and validator for JavaScript objects.
+
+With Hapi Joi, we create blueprints or schemas for JavaScript objects (an object that stores information) to ensure validation of key information.
+
+Hapi is a simple to use configuration-centric framework with built-in support for input validation, caching, authentication, and other essential facilities for building web and services applications.
+
+```javascript
+const Joi = require('joi');
+
+const schema = Joi.object({
+    username: Joi.string()
+        .alphanum()
+        .min(3)
+        .max(30)
+        .required(),
+
+    password: Joi.string()
+        .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+
+    repeat_password: Joi.ref('password'),
+
+    access_token: [
+        Joi.string(),
+        Joi.number()
+    ],
+
+    birth_year: Joi.number()
+        .integer()
+        .min(1900)
+        .max(2013),
+
+    email: Joi.string()
+        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+})
+    .with('username', 'birth_year')
+    .xor('password', 'access_token')
+    .with('password', 'repeat_password');
+
+
+schema.validate({ username: 'abc', birth_year: 1994 });
+// -> { value: { username: 'abc', birth_year: 1994 } }
+
+schema.validate({});
+// -> { value: {}, error: '"username" is required' }
+
+// Also -
+
+try {
+    const value = await schema.validateAsync({ username: 'abc', birth_year: 1994 });
+}
+catch (err) { }
+```
+
 ### Q.9: What is jsonwebtoken? What jsonwebtoken generate a token and how it verify?
+
+SON Web Token is a proposed Internet standard for creating data with optional signature and/or optional encryption whose payload holds JSON that asserts some number of claims. The tokens are signed either using a private secret or a public/private key.
+
+```javascript
+const jwt = require('jsonwebtoken');
+
+const generateAuthToken = function() {
+    const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));
+    return token;
+}
+```
+
 ### Q.10: What is bcryptjs?
 ### Q.11: What is crypto?
 ### Q.12: What is lodash?
