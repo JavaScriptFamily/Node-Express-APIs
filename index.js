@@ -1,9 +1,9 @@
 const express = require('express');
 const winston = require('winston'); // Winston is a simple and universal logging library 
-const cors    = require('cors')
+const cors    = require('cors') // CORS stands for Cross-Origin Resource Sharing. 
 const config  = require('config');
-const bodyParser = require('body-parser');
-const fileUpload = require('express-fileupload');
+const bodyParser = require('body-parser'); // Parsing the incoming request bodies in a middleware 
+const fileUpload = require('express-fileupload'); // Simple express middleware for uploading files.
 const publicDir  = require('path').join(__dirname,'/assets');
 
 const app = express();
@@ -25,11 +25,6 @@ require('./startup/validation')();
 const port = process.env.PORT || 4000;
 // process.env.TZ = "Asia/Calcutta";
 
-let server = '';
-if (config.environment != 'test') {
-    server = app.listen(port, () => winston.info(`Listening on port ${port}...`));
-} else {
-    server = app.listen(port);
-}
+let server = (config.environment == 'test') ? app.listen(port) : app.listen(port, () => winston.info(`Listening on port ${port}...`));
 
 module.exports = server;
